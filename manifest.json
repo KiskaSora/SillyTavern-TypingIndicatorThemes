@@ -1,5 +1,5 @@
 {
-  "display_name": "打字指示器",
+  "display_name": "Typing Indicator Themes",
   "loading_order": 777,
   "requires": [],
   "optional": [],
@@ -12,6 +12,7 @@
   "i18n": {
     "zh-cn": "zh-cn.json",
     "zh-tw": "zh-tw.json",
-    "th": "th.json"
+    "th": "th.json",
+    "ru-ru": "ru.json"
   }
 }

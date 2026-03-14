@@ -6862,6 +6862,8 @@ function addExtensionSettings() {
             currentLang = "zh";
           } else if (detectedLang.startsWith("th")) {
             currentLang = "th";
+          } else if (detectedLang.startsWith("ru")) {
+            currentLang = "ru";
           }
           const loadGuideContent = async (lang) => {
             let fileName = "usage_guide_en.md";
@@ -6869,6 +6871,8 @@ function addExtensionSettings() {
               fileName = "usage_guide_zh.md";
             } else if (lang === "th") {
               fileName = "usage_guide_th.md";
+            } else if (lang === "ru") {
+              fileName = "usage_guide_ru.md";
             }
             const guideFilePath = `${extensionPath}${fileName}`;
             const response = await fetch(guideFilePath);
@@ -6923,7 +6927,7 @@ function addExtensionSettings() {
                             border-bottom: 1px solid var(--SmartThemeBorderColor, #333);
                             flex-shrink: 0;
                         ">
-                            <h3 style="margin: 0; font-size: 1.2em;">📖 ${currentLang === "zh" ? "使用说明" : currentLang === "th" ? "คู่มือการใช้งาน" : "Usage Guide"}</h3>
+                            <h3 style="margin: 0; font-size: 1.2em;">📖 ${currentLang === "zh" ? "使用说明" : currentLang === "th" ? "คู่มือการใช้งาน" : currentLang === "ru" ? "Руководство пользователя" : "Usage Guide"}</h3>
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <!-- 语言切换按钮 -->
                                 <div id="ti_lang_switch" style="
@@ -6960,6 +6964,15 @@ function addExtensionSettings() {
         font-size: 12px;
         transition: all 0.2s;
     ">ไทย</button>
+    <button id="ti_lang_ru" class="${currentLang === "ru" ? "active" : ""}" style="
+        padding: 4px 10px;
+        border: none;
+        background: ${currentLang === "ru" ? "var(--SmartThemeQuoteColor, #88c0d0)" : "transparent"};
+        color: ${currentLang === "ru" ? "#000" : "var(--SmartThemeBodyColor, #fff)"};
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.2s;
+    ">RU</button>
 </div>
                                 <button id="ti_close_usage_guide" style="
                                     background: transparent;
@@ -7004,6 +7017,7 @@ function addExtensionSettings() {
           const langZhBtn = document.getElementById("ti_lang_zh");
           const langEnBtn = document.getElementById("ti_lang_en");
           const langThBtn = document.getElementById("ti_lang_th");
+          const langRuBtn = document.getElementById("ti_lang_ru");
           const titleEl = dialog.querySelector("h3");
 
           centerDialog(dialog);
@@ -7040,12 +7054,21 @@ function addExtensionSettings() {
               langThBtn.style.color =
                 lang === "th" ? "#000" : "var(--SmartThemeBodyColor, #fff)";
 
+              langRuBtn.style.background =
+                lang === "ru"
+                  ? "var(--SmartThemeQuoteColor, #88c0d0)"
+                  : "transparent";
+              langRuBtn.style.color =
+                lang === "ru" ? "#000" : "var(--SmartThemeBodyColor, #fff)";
+
               titleEl.textContent =
                 lang === "zh"
                   ? "📖 使用说明"
                   : lang === "th"
                     ? "📖 คู่มือการใช้งาน"
-                    : "📖 Usage Guide";
+                    : lang === "ru"
+                      ? "📖 Руководство пользователя"
+                      : "📖 Usage Guide";
 
               contentDiv.scrollTop = 0;
             } catch (error) {
@@ -7064,6 +7087,7 @@ function addExtensionSettings() {
           langZhBtn.addEventListener("click", () => switchLanguage("zh"));
           langEnBtn.addEventListener("click", () => switchLanguage("en"));
           langThBtn.addEventListener("click", () => switchLanguage("th"));
+          langRuBtn.addEventListener("click", () => switchLanguage("ru"));
           const resizeHandler = () => centerDialog(dialog);
 
           let escHandler;
